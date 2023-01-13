@@ -1,0 +1,38 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+      <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+        <div formGroupName="userData">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" formControlName="username" id="username" class="form-control">
+
+            <span *ngIf="!signupForm.get('userData.username').valid && signupForm.get('userData.username').touched" class="help-block text-danger">This field is required!</span>
+          </div>
+
+          <div class="form-group">
+            <label for="email">email</label>
+            <input type="text" formControlName="email" id="email" class="form-control">
+
+            <span *ngIf="!signupForm.get('userData.email').valid && signupForm.get('userData.email').touched" class="help-block text-danger">Please enter a valid email!</span>
+          </div>
+        </div>
+
+        <div class="radio" *ngFor="let gender of genders">
+          <label>
+            <input type="radio" formControlName="gender" [value]="gender">{{ gender }}
+          </label>
+        </div>
+        <p *ngIf="!signupForm.valid && signupForm.touched" class="help-block text-danger">Please enter valid data!</p>
+        <button class="btn btn-primary" type="submit" [disabled]="!signupForm.valid" >Submit</button>
+      </form>
+      {{signupForm.value | json}}
+      <div *ngIf="issubmitted">
+        <h3>Submitted Form Data:</h3>
+        <p>Name: {{signupForm.value.userData.username}}</p>
+        <p>Email: {{signupForm.value.userData.email}}</p>
+        <p>Gender: {{signupForm.value.gender}}</p>
+    </div>
+    </div>
+  </div>
+</div>
